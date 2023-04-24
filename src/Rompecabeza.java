@@ -17,12 +17,12 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
-
 public class Rompecabeza {
 
 	private JFrame frame;
 	private JPanel panelBotones;
 	private JLabel tiempoNum;
+	private Font fuente = new Font("Marker Felt", Font.PLAIN, 20);
 	
 	private JButton[][] botones= new JButton[4][4];
 	private JButton[][] botonesReiniciar= new JButton[4][4];
@@ -59,7 +59,7 @@ public class Rompecabeza {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 598, 510);
+		frame.setBounds(100, 100, 660, 510);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(new BorderLayout(0, 0));
@@ -74,7 +74,7 @@ public class Rompecabeza {
 		agregarbotones();
 	}
 	
-	public void agregarPaneles() {
+	public void agregarPaneles() {       //AGREGA LOS PANELES AL FRAME 
 		JPanel panelNorth = new JPanel();
 		panelNorth.setBackground(new Color(217, 178, 127));
 		frame.getContentPane().add(panelNorth, BorderLayout.NORTH);
@@ -110,24 +110,25 @@ public class Rompecabeza {
 		panelEast();
 	}
 	
-	public void panelEast() {
+	public void panelEast() {        //AGREGA EL PANEL EAST Y SUS BOTONES 
 		JPanel panelEast = new JPanel();
 		panelEast.setBackground(new Color(217, 178, 127));
 		frame.getContentPane().add(panelEast, BorderLayout.EAST);
 		panelEast.setLayout(new GridLayout(9, 2, 0, 0));
 		
-		JPanel panelTiempo = new JPanel();
-		panelTiempo.setBackground(new Color(217, 178, 127));
-		panelEast.add(panelTiempo);
-		panelTiempo.setLayout(new BorderLayout(0, 0));
+		JPanel panelPuzzle = new JPanel();
+		panelPuzzle.setBackground(new Color(217, 178, 127));
+		panelEast.add(panelPuzzle);
+		panelPuzzle.setLayout(new BorderLayout(0, 0));
 		
-		agregarEspacioWest(panelTiempo);
-		agregarEspacioEast(panelTiempo);
+		agregarEspacioWest(panelPuzzle);
+		agregarEspacioEast(panelPuzzle);
 		
-		JLabel tiempoTexto = new JLabel("TIEMPO");
-		panelTiempo.add(tiempoTexto, BorderLayout.CENTER);
-		tiempoTexto.setHorizontalAlignment(SwingConstants.CENTER);
-		tiempoTexto.setFont(new Font("Lucida Grande", Font.PLAIN, 25));
+		JLabel puzzleTexto = new JLabel("Puzzle");
+		panelPuzzle.add(puzzleTexto, BorderLayout.CENTER);
+		puzzleTexto.setHorizontalAlignment(SwingConstants.CENTER);
+		puzzleTexto.setFont(new Font("Marker Felt", Font.PLAIN, 45));
+		puzzleTexto.setForeground(new Color(15, 69, 80));
 		
 		JPanel vacio1 = new JPanel();
 		vacio1.setBackground(new Color(217, 178, 127));
@@ -147,7 +148,8 @@ public class Rompecabeza {
 		
 		tiempoNum = new JLabel("00:00:00:00");
 		tiempoNum.setHorizontalAlignment(SwingConstants.CENTER);
-		tiempoNum.setFont(new Font("Lucida Grande", Font.PLAIN, 35));
+		tiempoNum.setFont(new Font("Marker Felt", Font.PLAIN, 40));
+		tiempoNum.setForeground(new Color(21, 102, 118));
 		cronometro.add(tiempoNum);
 		
 		JPanel vacio2 = new JPanel();
@@ -169,7 +171,7 @@ public class Rompecabeza {
 		btnIniciar = new JButton("Iniciar");
 		btnIniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				desbloquearBotones();
+				desbloquearTablero();
 				tiempo.start();
 				btnIniciar.setEnabled(false);
 				btnIniciar.setText("Reanudar");
@@ -178,7 +180,8 @@ public class Rompecabeza {
 			}
 		});
 		
-		btnIniciar.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		btnIniciar.setFont(fuente);
+		btnIniciar.setForeground(new Color(19, 83, 96));
 		iniciar.add(btnIniciar, BorderLayout.CENTER);
 		
 		JPanel pausar = new JPanel();
@@ -199,7 +202,8 @@ public class Rompecabeza {
 				bloquearTablero();
 			}
 		});
-		btnPausar.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		btnPausar.setFont(fuente);
+		btnPausar.setForeground(new Color(19, 83, 96));
 		pausar.add(btnPausar, BorderLayout.CENTER);
 		
 		JPanel detener = new JPanel();
@@ -216,7 +220,8 @@ public class Rompecabeza {
 			}
 		});
 		btnReiniciarTablero.setEnabled(false);
-		btnReiniciarTablero.setFont(new Font("Lucida Grande", Font.PLAIN, 18));
+		btnReiniciarTablero.setFont(fuente);
+		btnReiniciarTablero.setForeground(new Color(19, 83, 96));
 		detener.add(btnReiniciarTablero, BorderLayout.CENTER);
 		
 		agregarEspacioWest(agregarEspacioWest(detener));
@@ -234,9 +239,10 @@ public class Rompecabeza {
 		
 		agregarEspacioWest(vacio3);
 		agregarEspacioEast(vacio3);
-		btnNuevoTablero = new JButton("Nuevo Tablero");
+		JButton btnNuevoTablero = new JButton("Nuevo Tablero");
 		vacio3.add(btnNuevoTablero, BorderLayout.CENTER);
-		btnNuevoTablero.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		btnNuevoTablero.setFont(fuente);
+		btnNuevoTablero.setForeground(new Color(19, 83, 96));
 		btnNuevoTablero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				agregarTexto();
@@ -246,14 +252,14 @@ public class Rompecabeza {
 		});
 	}
 
-	public JPanel agregarEspacioEast(JPanel panel ) {
+	public JPanel agregarEspacioEast(JPanel panel ) {  //AGREGA ESPACIO EN EL EAST DEL PANEL
 		JPanel espacio = new JPanel();
 		espacio.setBackground(new Color(217, 178, 127));
 		panel.add(espacio, BorderLayout.EAST);
 		return espacio;
 	}
 	
-	public JPanel agregarEspacioWest(JPanel panel ) {
+	public JPanel agregarEspacioWest(JPanel panel ) {  //AGREGA ESPACIO EN EL WEST DEL PANEL
 		JPanel espacio = new JPanel();
 		espacio.setBackground(new Color(217, 178, 127));
 		panel.add(espacio, BorderLayout.WEST);
@@ -262,12 +268,12 @@ public class Rompecabeza {
 	
 	
 	int i,j;
-	public void agregarbotones() {
+	public void agregarbotones() {  //AGREGA LOS BOTONES AL PANEL
 		for(i = 0; i < 4; i++) { //filas
 			for(j = 0; j < 4; j++) {  //columnas
 				botones[i][j] = new JButton();
 				botonesReiniciar[i][j] = new JButton();
-				botones[i][j].setFont(new Font("Times New Roman", Font.PLAIN, 50));
+				botones[i][j].setFont(new Font("Marker Felt", Font.CENTER_BASELINE, 60));
 				panelBotones.add(botones[i][j]);
 				
 				int k = i;
@@ -283,10 +289,9 @@ public class Rompecabeza {
 			}
 		}
 		agregarTexto();
-		
 	}
 	
-	public void agregarTexto() {
+	public void agregarTexto() {   //AGREGA EL NUMERO A CADA BOTON
 		List<Integer> numeros = new ArrayList<Integer>();
         for (int i = 1; i <= 16; i++) {
         	numeros.add(i);
@@ -298,7 +303,7 @@ public class Rompecabeza {
 			for(int j = 0; j < 4; j++) {  
 				botones[i][j].setEnabled(false);
 				botones[i][j].setText(""+ numeros.get(cont));
-				//botones[i][j].setForeground();
+				botones[i][j].setForeground(new Color(29, 152, 176));
 				aux[i][j] = botones[i][j];
 				cont++;
 				if(botones[i][j].getText().equals("16")) {
@@ -311,7 +316,7 @@ public class Rompecabeza {
 		actualizarFrame();
 	}
 	
-	public void bloquearTablero() {
+	public void bloquearTablero() {  //BLOQUEA LOS BOTONES
 		for(int i = 0; i < 4; i++) { 
 			for(int j = 0; j < 4; j++) {  
 				botones[i][j].setEnabled(false);
@@ -319,12 +324,15 @@ public class Rompecabeza {
 		}
 	}
 	
-	public void actualizarFrame() {
-		frame.repaint();
-		frame.revalidate();
+	public void desbloquearTablero() {  //DESBLOQUEA LOS BOTONES
+		for(i = 0; i < 4; i++) { 
+			for(j = 0; j < 4; j++) { 
+				botones[i][j].setEnabled(true);
+			}
+		}
 	}
 	
-	public int[] ubicacion(JButton botonSeleccionado) {
+	public int[] ubicacion(JButton botonSeleccionado) {  //BUSCA Y DEVUELVE LA UBICACION DEL BOTON PULSADO
 		int[] posicion = new int[2];
 		for(int i = 0; i < botones.length; i++) { 
 			for(int j = 0; j < botones[0].length; j++) {  
@@ -338,7 +346,7 @@ public class Rompecabeza {
 		return posicion;	
 	}
 	
-	public JButton botonVacio() {
+	public JButton botonVacio() {   //BUSCA Y DEVUELVE EL BOTON VACIO
 		JButton vacio = new JButton();
 		for(int i = 0; i < botones.length; i++) { 
 			for(int j = 0; j < botones[0].length; j++) {  
@@ -353,15 +361,7 @@ public class Rompecabeza {
 		return vacio;
 	}
 	
-	public void desbloquearBotones() {
-		for(i = 0; i < 4; i++) { 
-			for(j = 0; j < 4; j++) { 
-				botones[i][j].setEnabled(true);
-			}
-		}
-	}
-	
-	public void verificar(JButton boton) {
+	public void verificar(JButton boton) {   //VERIFICA SI EL BOTON PUEDE O NO MOVERSE
 		int [] ubiBoton= ubicacion(boton);
 		int [] ubiBotonVacio= ubicacion(botonVacio());
 		
@@ -384,8 +384,8 @@ public class Rompecabeza {
 		}
 	}
 	
-	public boolean validarFinalizado() {
-		boolean ordenados = false;
+	public boolean validarFinalizado() {  //VALIDA EL ORDEN DEL TEXTO DE LOS BOTONES PARA SABER 
+		boolean ordenados = false;		  //SI TERMINO O NO EL JUGADOR
 		int cont = 0, contOrdenados = 0;
 		for(int i = 0; i < botones.length; i++) {
 			for(int j = 0; j < botones[0].length; j++) {  
@@ -401,7 +401,7 @@ public class Rompecabeza {
 		return ordenados;
 	}
 	
-	public void rompecabezaCompleto() {
+	public void rompecabezaCompleto() {  //MANDA UN MENSAJE DE TERMINADO Y EL TIEMPO QUE LE LLEVÓ AL JUGADOR
 		 if(validarFinalizado()) {
 			 tiempo.stop();
 			 JOptionPane.showMessageDialog(null, "¡Rompecabezas Completo!" + "\nTiempo de armado: " + tiempoNum.getText());
@@ -410,12 +410,12 @@ public class Rompecabeza {
 		 }
 	}
 	
-	public void cambiar(JButton boton1, JButton boton2) {
+	public void cambiar(JButton boton1, JButton boton2) {  //CAMBIA EL TEXTO DE LOS BOTONES
 		boton1.setText(boton2.getText());
 		boton2.setText("");
 		actualizarFrame();
 	}	
-	public void cambiarTablero() {
+	public void cambiarTablero() {  //CAMBIA EL TEXTO DE LOS BOTONES ALEATORIAMENTE PARA UN NUEVO TABLERO
 		for(i = 0; i < 4; i++) { 
 			for(j = 0; j < 4; j++) {  
 				botones[i][j].setText(botonesReiniciar[i][j].getText());
@@ -423,14 +423,14 @@ public class Rompecabeza {
 		}
 		actualizarFrame();
 	}
-	public void actualizarTiempo() {
+	public void actualizarTiempo() {  //ACTUALIZA EL TIEMPO
 		String tiempo = (horas <= 9?"0":"")+ horas +":" +(minutos <= 9?"0":"")+ 
 				minutos +":"+(segundos <= 9?"0":"")+ segundos +":"+
 				(centecimas <= 9?"0":"")+ centecimas;
 		tiempoNum.setText(tiempo);
 	}
 	
-	public void reiniciarTiempo() {
+	public void reiniciarTiempo() {  //REINICIAR EL TIEMPO
 		if(tiempo.isRunning()) {
 			tiempo.stop();
 		}
@@ -446,7 +446,7 @@ public class Rompecabeza {
 		btnPausar.setEnabled(false);
 		btnReiniciarTablero.setEnabled(false);
 	}
-	private ActionListener accion = new ActionListener() {
+	private ActionListener accion = new ActionListener() {  //HACE LA FUNCION DE UN CRONOMETRO
 		public void actionPerformed(ActionEvent e) {
 			centecimas++;
 			
@@ -472,6 +472,9 @@ public class Rompecabeza {
 			actualizarFrame();
 		}	
 	};
-	private JButton btnNuevoTablero;
 	
+	public void actualizarFrame() {  //ACTUALIZA LA VENTANA
+		frame.repaint();
+		frame.revalidate();
+	}
 }
